@@ -1,0 +1,7 @@
+ALTER TABLE: Add column
+
+ALTER TABLE table_name ADD type ;
+
+i.e:
+
+ALTER TABLE users ADD age VARCHAR(10);
