@@ -1,3 +1,5 @@
+Brad crash course mysql -- familiarizing self with statements, retyping: muscle mem.
+---------------------------------------------------------------------------
 ALTER TABLE: Add column
 
 ALTER TABLE table_name ADD type ;
@@ -5,3 +7,130 @@ ALTER TABLE table_name ADD type ;
 i.e:
 
 ALTER TABLE users ADD age VARCHAR(10);
+-------------------------------------------------------------------------
+CREATE TABLE table_name(fields);
+
+i.e:
+
+CREATE TABLE users(
+    -> id INT AUTO_INCREMENT,
+    -> first_name VARCHAR(255),
+    -> last_name VARCHAR(255),
+    -> email VARCHAR(255),
+    -> password VARCHAR(255),
+    -> location VARCHAR(255),
+    -> dept VARCHAR(255),
+    -> is_admin TINYINT(1),
+    -> register_date DATETIME,
+    -> PRIMARY KEY(id)
+    -> );
+------------------------------------------------------------------------
+DELETE FROM table_name WHERE condition
+
+WHERE is important for delete. i.e:
+
+DELETE FROM users WHERE email = some_user@email.com;
+------------------------------------------------------------------------
+MODIFY -- maybe different base on dms
+
+ALTER TABLE table_name MODIFY COLUMN condition
+
+i.e:
+
+ALTER TABLE users MODIFY COLUMN age TINYINT(3);
+------------------------------------------------------------------------
+ORDER BY , types: ASC, DESC   , -- i.e:
+
+SELECT * FROM users ORDER BY last_name ASC;
+----------------------------------------------------------------------------
+CONCAT(), -- i.e:
+
+SELECT CONCAT(first_name, ' ', last_name) AS 'Name' FROM users;
+----------------------------------------------------------------------------
+DISTINCT, -- meaning: unique values within fields (no repeat) , -- i.e:    
+
+SELECT DISTINCT location FROM users;
+-----------------------------------------------------------------------------
+BETWEEN, -- i.e:
+
+SELECT * FROM users WHERE age BETWEEN 20 AND 25;
+----------------------------------------------------------------------------
+LIKE 
+
+'d%' = match anything that starts with 'd' within fields
+
+'%t' match anything that ends with 't', casing doesn't matter --tested
+
+'%e%' = almost like regex: anything can come before 'e' and after;
+
+i.e: 
+
+SELECT * FROM users WHERE dept LIKE 'd%';
+
+SELECT * FROM users WHERE dept LIKE '%t';
+
+SELECT * FROM users WHERE dept LIKE '%e%';
+-----------------------------------------------------------------------------
+
+NOT LIKE -- opposite of LIKE;
+
+-----------------------------------------------------------------------------
+IN(csv)
+
+SELECT * FROM users WHERE dept IN('design', 'sales');
+-----------------------------------------------------------------------------
+INDEX
+
+CREATE INDEX custom_name on table_name(field);
+
+i.e:
+
+CREATE INDEX loc_Index on users(location);
+-----------------------------------------------------------------------------
+remove INDEX
+
+DROP INDEX custom_name on table_name;
+
+i.e:
+
+DROP INDEX loc_Index on users;
+-----------------------------------------------------------------------------
+FOREIGN KEY -- added with fields in table creation;
+
+i.e:
+
+CREATE TABLE posts(
+	id INT AUTO_INCREMENT,
+    user_id INT,
+    title VARCHAR(255),
+    body TEXT,
+    publish_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(id),
+    FOREIGN KEY(user_id) REFERENCES users(id)   
+);
+-----------------------------------------------------------------------------
+JOIN, -_- , INNER JOIN
+
+i.e:
+
+SELECT 
+posts.title,
+posts.publish_date,
+CONCAT(users.first_name, ' ',
+users.last_name)
+AS NAME FROM users
+INNER JOIN posts
+ON users.id = posts.user_id
+ORDER BY posts.title;
+
+-----------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------
